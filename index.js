@@ -5,7 +5,6 @@ const nextAuth = require('next-auth')
 const nextAuthConfig = require('./next-auth.config')
 
 const routes = {
-  admin:  require('./routes/admin'),
   account:  require('./routes/account')
 }
 
@@ -20,10 +19,9 @@ process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection: Promise:', p, 'Reason:', reason)
 })
 
-// Default when run with `npm start` is 'production' and default port is '80'
-// `npm run dev` defaults mode to 'development' & port to '3000'
-process.env.NODE_ENV = process.env.NODE_ENV || 'production'
-process.env.PORT = process.env.PORT || 80
+process.env.PORT = 3000;
+
+console.log(`NODE_ENV is ${process.env.NODE_ENV}`);
 
 // Initialize Next.js
 const nextApp = next({
@@ -50,9 +48,6 @@ nextApp
   const express = nextAuthOptions.express
   const expressApp = nextAuthOptions.expressApp
 
-  // Add admin routes
-  routes.admin(expressApp)
-  
   // Add account management route - reuses functions defined for NextAuth
   routes.account(expressApp, nextAuthOptions.functions)
   
